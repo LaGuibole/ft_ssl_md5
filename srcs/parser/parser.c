@@ -36,6 +36,8 @@ static int handle_flag(t_options *options, int argc, char **argv, int *i)
 			if (!node)
 				return error_malloc();
 			add_input(options, node);
+			if (*i + 2 < argc)
+				return error_unexpected_argument(argv[*i + 2]);
 			*i += 1;
 			return 0;
 		default:

@@ -30,6 +30,12 @@ int error_read(const char *name)
     return 1;
 }
 
+int error_unexpected_argument(const char *name)
+{
+    fd_printf(2, "ft_ssl: unexpected argument -- '%s'\n", name);
+    return 1;
+}
+
 int error_invalid_command(const char *name)
 {
     fd_printf(2, "Error: %s invalid command\n", name);
