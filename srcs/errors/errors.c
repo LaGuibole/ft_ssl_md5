@@ -29,3 +29,9 @@ int error_read(const char *name)
     fd_printf(2, "ft_ssl: %s: Error reading file\n", &name);
     return 1;
 }
+
+int error_invalid_command(const char *name)
+{
+    fd_printf(2, "Error: %s invalid command\n", name);
+    return 1;
+}

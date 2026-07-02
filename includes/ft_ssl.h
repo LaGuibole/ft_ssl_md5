@@ -44,18 +44,33 @@ typedef struct s_buffer
 	size_t			capacity;
 } t_buffer;
 
+// parser
 int			parse_options(t_options *options, int argc, char **argv);
 t_input		*new_input(t_input_type type, const char *value);
 void		add_input(t_options *options, t_input *new);
 void		free_inputs(t_input *inputs);
+
+// cmd handling
+int 		cmd_md5(int argc, char **argv);
+int			cmd_sha256(int argc, char **argv);
+int			dispatch_commands(int argc, char **argv);
+
+// read inputs, files, string
+int			read_input(t_input *input, t_buffer *buffer);
+int			read_fd(int fd, t_buffer *buffer);
+void		free_buffer(t_buffer *buffer);
+
+// errors
 int			error_invalid_option(char options);
 int			error_option_argument(char options);
 int			error_malloc(void);
 int 		error_open(const char *name);
 int 		error_read(const char *name);
-// void		print_options(t_options *options);
-int			read_input(t_input *input, t_buffer *buffer);
-int			read_fd(int fd, t_buffer *buffer);
-void		free_buffer(t_buffer *buffer);
+int			error_invalid_command(const char *name);
+//debug
+void		print_options(t_options *options);
+void		test_inputs(t_options *options);
+const char	*type_str(t_input_type type);
+
 
 #endif
