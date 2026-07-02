@@ -18,7 +18,7 @@ typedef enum e_input_type
 typedef struct s_input
 {
 	t_input_type    type;
-	char      *value; // file name or the string given with -s flag
+	char      		*value; // file name or the string given with -s flag
 	struct s_input  *next; // pointer to next input
 } t_input;
 

@@ -50,6 +50,8 @@ int read_fd(int fd, t_buffer *buffer)
             break ;
         buffer->len += (size_t)n;
     }
+    if (buffer->data[buffer->len - 1] == '\n')
+        buffer->data[buffer->len - 1] = '\0';
     return 0;
 }
 
@@ -74,8 +76,14 @@ int read_input(t_input *input, t_buffer *buffer)
         ft_memcpy(buffer->data, input->value, buffer->len);
         return 0;
     }
+    
     if (input->type == INPUT_STDIN)
-        return read_fd(0, buffer);
+        // return read_fd(0, buffer);
+    {    
+        char *ret = get_next_line(0);
+        if (!ret)
+            return 1;
+    }
     fd = open(input->value, O_RDONLY);
     if (fd < 0)
         return error_open(input->value);

@@ -1,6 +1,3 @@
-#include "ft_ssl.h"
-#include <stdio.h>
-
 // static const char	*type_str(t_input_type type)
 // {
 // 	if (type == INPUT_STDIN)
