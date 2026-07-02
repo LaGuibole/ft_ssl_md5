@@ -75,8 +75,7 @@ int read_input(t_input *input, t_buffer *buffer)
             return error_malloc();
         ft_memcpy(buffer->data, input->value, buffer->len);
         return 0;
-    }
-    
+    }    
     if (input->type == INPUT_STDIN)
         return read_fd(0, buffer);
     fd = open(input->value, O_RDONLY);

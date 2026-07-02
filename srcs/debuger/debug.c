@@ -70,3 +70,27 @@ void	test_inputs(t_options *options)
 		free_buffer(&buffer);
 	}
 }
+
+void	print_digest_le(t_md5_state *state)
+{
+	uint32_t	words[4];
+	int			i;
+	int			j;
+
+	words[0] = state->a;
+	words[1] = state->b;
+	words[2] = state->c;
+	words[3] = state->d;
+	i = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			printf("%02x", (words[i] >> (8 * j)) & 0xff);
+			j++;
+		}
+		i++;
+	}
+	printf("\n");
+}
