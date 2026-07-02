@@ -92,7 +92,6 @@ int				error_option_argument(char options);
 int				error_malloc(void);
 int 			error_open(const char *name);
 int 			error_read(const char *name);
-int				error_unexpected_argument(const char *name);
 int				error_invalid_command(const char *name);
 //debug
 void			print_options(t_options *options);
