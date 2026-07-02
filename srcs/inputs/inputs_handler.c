@@ -14,11 +14,16 @@ t_input *new_input(t_input_type type, const char *value)
 	new = malloc(sizeof(t_input));
 	if (!new)
 		return NULL;
-	new->value = ft_strdup(value);
-	if (!new->value)
+	if (type == INPUT_STDIN)
+		new->value = NULL;
+	else
 	{
-		free(new);
-		return NULL;
+		new->value = ft_strdup(value);
+		if (!new->value)
+		{
+			free(new);
+			return (NULL);
+		}
 	}
 	new->type = type;
 	new->next = NULL;

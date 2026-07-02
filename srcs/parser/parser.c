@@ -77,6 +77,12 @@ int parse_options(t_options *options, int argc, char **argv)
 		}
 	}
 	if (!options->inputs)
+	{
+		node = new_input(INPUT_STDIN, NULL);
+		if (!node)
+			return error_malloc();
+		add_input(options, node);
 		options->use_stdin = 1;
+	}
 	return 0;
 }
