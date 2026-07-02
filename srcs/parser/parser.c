@@ -76,7 +76,7 @@ int parse_options(t_options *options, int argc, char **argv)
 			add_input(options, node);
 		}
 	}
-	if (!options->inputs)
+	if (!options->inputs && !options->p)
 	{
 		node = new_input(INPUT_STDIN, NULL);
 		if (!node)

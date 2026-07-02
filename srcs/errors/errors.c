@@ -2,13 +2,13 @@
 
 int error_invalid_option(char options)
 {
-    fd_printf(2, "ft_ssl: invalid option -- '%s'\n", &options);
+    fd_printf(2, "ft_ssl: invalid option -- '%s'\n", options);
     return 1;
 }
 
 int error_option_argument(char options)
 {
-    fd_printf(2, "ft_ssl: option requires an argument -- '%s'\n", &options);
+    fd_printf(2, "ft_ssl: option requires an argument -- '%s'\n", options);
     return 1;
 }
 
@@ -20,13 +20,13 @@ int error_malloc(void)
 
 int error_open(const char *name)
 {
-    fd_printf(2, "ft_ssl: %s: No such file or directory\n", &name);
+    fd_printf(2, "ft_ssl: %s: No such file or directory\n", name);
     return 1;
 }
 
 int error_read(const char *name)
 {
-    fd_printf(2, "ft_ssl: %s: Error reading file\n", &name);
+    fd_printf(2, "ft_ssl: %s: Error reading file\n", name);
     return 1;
 }
 

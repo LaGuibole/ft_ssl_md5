@@ -85,6 +85,9 @@ uint32_t		left_rotate(uint32_t x, int n);
 // uint32_t		read_word_le(const unsigned char *block, int index);
 int				md5_hash(const unsigned char *data, size_t len, t_digest *digest);
 void    		print_digest_hex(t_digest *digest);
+void 			print_result(t_input *input, t_digest *digest, t_options *options, const char *label);
+int 			handle_p_flag(t_options *options);
+
 
 // errors
 int				error_invalid_option(char options);
