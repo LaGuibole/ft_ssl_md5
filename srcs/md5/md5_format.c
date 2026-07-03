@@ -2,9 +2,16 @@
 
 static void print_quoted_stripped(const unsigned char *data, size_t len)
 {
+    size_t i = 0;
+
     if (len > 0 && data[len - 1] == '\n')
         len--;
-    fd_printf(1, "\"%s\"", data);
+    while (i < len)
+    {
+        write(1, &data[i], 1);
+        i++;
+    }
+    // fd_printf(1, "\"%s\"", data);
 }
 
 void print_result(t_input *input, t_digest *digest, t_options *options, const char *label)
@@ -27,7 +34,7 @@ void print_result(t_input *input, t_digest *digest, t_options *options, const ch
     }
     if (input->type == INPUT_STDIN)
     {
-        fd_printf(1, "(stdin)= ");
+        fd_printf(1, "MD5(stdin)= ");
         print_digest_hex(digest);
         fd_printf(1, "\n");
         return ;
@@ -62,9 +69,9 @@ int handle_p_flag(t_options *options)
     }
     else
     {
-        fd_printf(1, "(");
-        print_quoted_stripped(buffer.data, buffer.len);
-        fd_printf(1, ")= ");
+        fd_printf(1, "(\"");
+        print_quoted_stripped(buffer.data, buffer.len - 1);
+        fd_printf(1, "\")= ");
         print_digest_hex(&digest);
         fd_printf(1, "\n");
     }
