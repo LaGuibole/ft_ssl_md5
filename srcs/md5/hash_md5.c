@@ -32,7 +32,7 @@ int    md5_hash(const unsigned char *data, size_t len, t_digest *digest)
     size_t          i;
     t_md5_state     state;
 
-    padded = md5_pad(data, len, &padded_len);
+    padded = apply_padding(data, len, &padded_len, "md5");
     if (!padded)
         return error_malloc();
     md5_init(&state);
@@ -44,6 +44,7 @@ int    md5_hash(const unsigned char *data, size_t len, t_digest *digest)
         i++;
     }
     state_to_digest(&state, digest);
+    digest->size = MD5_DIGEST_SIZE;
     free(padded);
     return 0;
 }
@@ -51,7 +52,7 @@ int    md5_hash(const unsigned char *data, size_t len, t_digest *digest)
 void    print_digest_hex(t_digest *digest)
 {
     static const char   hex[] = "0123456789abcdef";
-    int                 i;
+    size_t              i;
 
     i = 0;
     // while (i < MD5_DIGEST_SIZE)
@@ -60,7 +61,7 @@ void    print_digest_hex(t_digest *digest)
     //     fd_printf(1, "%c", &hex[digest->bytes[i] & 0xf]);
     //     i++;
     // }
-    while (i < MD5_DIGEST_SIZE)
+    while (i < digest->size)
     {
         write(1, &hex[digest->bytes[i] >> 4], 1);
 		write(1, &hex[digest->bytes[i] & 0xf], 1);

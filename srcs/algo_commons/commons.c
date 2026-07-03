@@ -5,7 +5,7 @@
 /// @param len buffer->len
 /// @param padded_len 
 /// @return 
-unsigned char *md5_pad(const unsigned char *data, size_t len, size_t *padded_len)
+unsigned char *apply_padding(const unsigned char *data, size_t len, size_t *padded_len, char *algo)
 {
     size_t          padding_zeros;
     unsigned char   *buffer;
@@ -25,10 +25,21 @@ unsigned char *md5_pad(const unsigned char *data, size_t len, size_t *padded_len
     buffer[len] = 0x80;
     bit_len = (uint64_t)len * 8;
 
-    while (i < 8)
+    if (ft_strcmp(algo, "md5") == 0)
     {
-        buffer[*padded_len - 8 + i] = (unsigned char)(bit_len >> (8 * i));
-        i++;
+        while (i < 8)
+        {
+            buffer[*padded_len - 8 + i] = (unsigned char)(bit_len >> (8 * i));
+            i++;
+        }
+    }
+    else if (ft_strcmp(algo, "sha256") == 0)
+    {
+        while (i < 8)
+        {
+            buffer[*padded_len - 1 + i] = (unsigned char)(bit_len >> (8 * i));
+            i++;
+        }
     }
     return buffer;
 }
