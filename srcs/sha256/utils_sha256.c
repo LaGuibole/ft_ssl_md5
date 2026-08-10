@@ -12,12 +12,12 @@ void sha256_init(t_sha256_state *state)
     state->h[7] = 0x5be0cd19;
 }
 
-uint32_t right_rotate(u_int32_t x, int n)
+uint32_t right_rotate(uint32_t x, int n)
 {
     return ((x >> n) | (x << (32 - n)));
 }
 
-static u_int32_t read_word_be(const unsigned char *block, int index)
+static uint32_t read_word_be(const unsigned char *block, int index)
 {
     return (((u_int32_t)block[index * 4] << 24)
         | ((u_int32_t)block[index * 4 + 1] << 16)
@@ -32,7 +32,7 @@ static uint32_t ch(uint32_t x, uint32_t y, uint32_t z)
 
 static uint32_t maj(uint32_t x, uint32_t y, uint32_t z)
 {
-    return ((x ^ y) ^ (x & z) ^ (y & z));
+    return ((x & y) ^ (x & z) ^ (y & z));
 }
 
 static uint32_t big_sigma0(uint32_t x)

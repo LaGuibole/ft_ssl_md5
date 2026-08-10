@@ -18,7 +18,7 @@ int	cmd_md5(int argc, char **argv)
 		return (1);
 	}
 	if (options.p)
-		handle_p_flag(&options);
+		handle_p_flag(&options, md5_hash);
 	current = options.inputs;
 	while (current)
 	{

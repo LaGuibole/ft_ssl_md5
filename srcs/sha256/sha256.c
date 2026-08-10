@@ -3,6 +3,9 @@
 int	cmd_sha256(int argc, char **argv)
 {
 	t_options	options;
+	t_input		*current;
+	t_buffer	buffer;
+	t_digest	digest;
 
 	options.p = 0;
 	options.q = 0;
@@ -14,8 +17,26 @@ int	cmd_sha256(int argc, char **argv)
 		free_inputs(options.inputs);
 		return (1);
 	}
-	print_options(&options);
-    test_inputs(&options);
+	if (options.p)
+		handle_p_flag(&options, sha256_hash);
+	current = options.inputs;
+	while (current)
+	{
+		if (read_input(current, &buffer))
+		{
+			current = current->next;
+			continue ;
+		}
+		if (sha256_hash(buffer.data, buffer.len, &digest))
+		{
+			free_buffer(&buffer);
+			free_inputs(options.inputs);
+			return (1);
+		}
+		print_result(current, &digest, &options, "SHA256");
+		free_buffer(&buffer);
+		current = current->next;
+	}
 	free_inputs(options.inputs);
 	return (0);
 }
