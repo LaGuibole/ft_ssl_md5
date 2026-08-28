@@ -45,7 +45,10 @@ int read_fd(int fd, t_buffer *buffer)
         }
         n = read(fd, buffer->data + buffer->len, CHUNK_SIZE);
         if (n < 0)
+        {
+            free_buffer(buffer);
             return 1;
+        }
         if (n == 0)
             break ;
         buffer->len += (size_t)n;

@@ -2,13 +2,13 @@
 
 int error_invalid_option(char options)
 {
-    fd_printf(2, "ft_ssl: invalid option -- '%s'\n", options);
+    fd_printf(2, "ft_ssl: invalid option -- '%c'\n", options);
     return 1;
 }
 
 int error_option_argument(char options)
 {
-    fd_printf(2, "ft_ssl: option requires an argument -- '%s'\n", options);
+    fd_printf(2, "ft_ssl: option requires an argument -- '%c'\n", options);
     return 1;
 }
 
