@@ -3,6 +3,7 @@
 int	main(int argc, char **argv)
 {
 	return dispatch_commands(argc, argv);
+	
 	// (void)argc;
 	// (void)argv;
 	// unsigned char	*padded;

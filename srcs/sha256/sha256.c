@@ -1,6 +1,6 @@
 #include "ft_ssl.h"
 
-int	cmd_md5(int argc, char **argv)
+int	cmd_sha256(int argc, char **argv)
 {
 	t_options	options;
 	t_input		*current;
@@ -18,7 +18,7 @@ int	cmd_md5(int argc, char **argv)
 		return (1);
 	}
 	if (options.p)
-		handle_p_flag(&options, md5_hash);
+		handle_p_flag(&options, sha256_hash);
 	current = options.inputs;
 	while (current)
 	{
@@ -27,13 +27,13 @@ int	cmd_md5(int argc, char **argv)
 			current = current->next;
 			continue ;
 		}
-		if (md5_hash(buffer.data, buffer.len, &digest))
+		if (sha256_hash(buffer.data, buffer.len, &digest))
 		{
 			free_buffer(&buffer);
 			free_inputs(options.inputs);
 			return (1);
 		}
-		print_result(current, &digest, &options, "MD5");
+		print_result(current, &digest, &options, "SHA256");
 		free_buffer(&buffer);
 		current = current->next;
 	}
