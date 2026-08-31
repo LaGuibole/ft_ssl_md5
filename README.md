@@ -178,10 +178,59 @@ Exemple :
 MD5("abc")
 900150983cd24fb0d6963f7d28e17f72
 ```
+# Partie 2 : SHA256
 
+### Bon a savoir avant de commencer : 
+
+1. `SHA-256` fait partie de la famille `SHA-2` publiee par la NSA en 2001.
+2. Tout comme `MD5` il produit un digest qui prend une entree de taille "libre" et produit une sortie fixe, `256 bits (64 caracteres hexa)`
+3. A ce jour, il est considere comme sur, pas encore de collision demontree
+4. Travaille egalement par bloc de `512 bits (64 octets)`, decoupage en blocs dans l'esprit `MD5`.
+
+### Les etapes et differences avec MD5 : 
+
+**Le padding**  
+Exactement la meme chose que `MD5` dans l'esprit, dans les faits, `SHA-256` travaille lui en **big-endian**.  
+
+**Les huits registres** : `MD5` a 4 states, la ou `SHA-256` en a 8 :  
+`a b c d e f g h`  
+Initialise egalement via des constantes (h0 a h7) :  
+```
+h0 = 0x6a09e667
+h1 = 0xbb67ae85
+h2 = 0x3c6ef372
+h3 = 0xa54ff53a
+h4 = 0x510e527f
+h5 = 0x9b05688c
+h6 = 0x1f83d9ab
+h7 = 0x5be0cd19
+```
+Ces valeurs viennent de la partie fractionnaires des racines carrees des 8 premiers nombre premiers (2,3,5,7,11,13,17,19). C'est la meme logique pour `MD5` avec `sin()`, des valeurs publiques, deterministes.  
+
+Comme pour `MD5` : il y a feed-forward a la fin de chaque bloc.  
+
+**Le message schedule (c'est la grosse diff entre MD5 et SHA-256)** :  
+`MD5` utilise directment les 16 mots du bloc la ou `SHA-256` fait un travail de preparation : il etend les *16 mots* du bloc en *64 mots*.  
+L'avantage est que ce fait circuler de l'info avant meme d'entrer dans la boucle de compression.  
+
+**Les fonctions internes** utilise les meme fonctions a chaque round, la ou `MD5`change tous les 16 tours mais il y a plus de fonctions et **brassent plus de bits a la fois.**  
+
+**La boucle de compression** : 64 tours. Meme idee que MD5, les registres tournent et s'echangent a tour de role mais passent par le meme type de tour en boucle, la ou MD5 switch au lieu de faire 4 blocs de 16 tours avec une autre fonction a chaque fois.
+
+
+# A retenir : 
+
+**Pourquoi on ne peut pas "reverse" un hash :**  
+
+1. *Perte d'info irreversible* : sortie de taille fixe pour une entree arbitraire => plusieurs entrees sont possible pour une meme sortie, aucun moyen de savoir laquelle est la bonne
+2. *Operations non-bijectives (a vos souhaits)* : additions `modulo 2^32`, `f* ch(), maj(), f(), g() etc...` ne sont pas reversibles individuellement : remonter le calcul fait exploser le nombre de solutions possibles a chaque tour au lieu de reduire.
+3. *Effet avalanche (SCA)* : un bit change en entree modifie =~50% des bits de sortie. Aucune structure algebrique exploitable.
+4. *Une option : Le Bruteforce* : essayer une liste de candidats et comparer les hashs (attaque par dictionnaire).
 
 Sources : 
 
- - https://en.wikipedia.org/wiki/MD5
- - https://www.ietf.org/rfc/rfc1321.txt
- - https://www.johndcook.com/blog/2024/03/20/md5-hash-collision/
+ - [Wikipedia](https://en.wikipedia.org/wiki/MD5)
+ - [RFC Doc](https://www.ietf.org/rfc/rfc1321.txt)
+ - [Blog John D Cook](https://www.johndcook.com/blog/2024/03/20/md5-hash-collision/)
+ - [RareSkills - Youtube](https://youtu.be/5MiMK45gkTY?si=IsytVJfBzd6272Dd)
+- [TheCodingGopher - Youtube](https://youtu.be/R_mOWu3s6y4?si=AzsLDaHH2lktGskU)
