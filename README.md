@@ -213,10 +213,59 @@ Comme pour `MD5` : il y a feed-forward a la fin de chaque bloc.
 `MD5` utilise directment les 16 mots du bloc la ou `SHA-256` fait un travail de preparation : il etend les *16 mots* du bloc en *64 mots*.  
 L'avantage est que ce fait circuler de l'info avant meme d'entrer dans la boucle de compression.  
 
-**Les fonctions internes** utilise les meme fonctions a chaque round, la ou `MD5`change tous les 16 tours mais il y a plus de fonctions et **brassent plus de bits a la fois.**  
+**Les fonctions internes** utilisent les meme fonctions a chaque round, la ou `MD5`change tous les 16 tours mais il y a plus de fonctions et **brassent plus de bits a la fois.**  
 
 **La boucle de compression** : 64 tours. Meme idee que MD5, les registres tournent et s'echangent a tour de role mais passent par le meme type de tour en boucle, la ou MD5 switch au lieu de faire 4 blocs de 16 tours avec une autre fonction a chaque fois.
 
+### Schema visuels
+**MD5**  
+
+```
+|-----------------------|
+|        MESSAGE        |
+|-----------------------|
+            |
+            |
+            |
+|-----------------------|
+|    PADDING AJOUTE     |
+|0x80 + zeros + longueur|
+|-----------------------|
+            |
+            |
+            |
+|-----------------------|
+|    MESSGAGE PADDE     |
+|  Multiple de 512 bits |
+|-----------------------|
+            |
+            |
+            |
+un bloc - 512 bits
+16 mots de 32 bits
+|-----------------------|
+|  [M0] [M1] [M2] [M3]  |
+|  [M4] [M5] [M6] [M7]  |
+|  [M8] [M9] [M10] [M11]|
+|[M12] [M13] [M14] [M15]|
+|-----------------------|
+
+```
+**SHA-256**  
+```
+|-----------------------|
+|      [M0] - [M15]     |
+|     issus du bloc     |
+|-----------------------|
+            |
+            | etend
+            |
+            V
+|--------------------------------------------------------|
+|                       [M16 - M63]                      |
+|                     48 mots calcules                   |
+|--------------------------------------------------------|
+```
 
 # A retenir : 
 
